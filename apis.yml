@@ -1,8 +1,32 @@
 aid: hilberts-ai
 name: Hilbert's AI
-description: Hilbert's AI is a company surfaced as a portfolio company of a16z and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Hilbert's AI is an AI-native growth infrastructure platform for B2C companies,
+  backed by a16z. It unifies fragmented product, marketing, and finance data into
+  a single source of truth and layers agentic automation on top through four
+  intelligence stages: Detect (anomalies, churn signals, and behavioral shifts),
+  Reason (ML/deep-learning root-cause analysis and forecasting), Act (autonomous
+  growth interventions such as churn plays and channel adjustments), and Optimize
+  (continuous budget and strategy tuning). A natural-language interface lets growth,
+  product, and finance teams collapse months-long decision cycles into minutes
+  without writing code or navigating dashboards. Hilbert connects to existing data
+  and paid-media stacks via prebuilt integrations (Meta, Google, Pinterest, Snapchat,
+  Reddit, Google Analytics 4, Triple Whale, Klaviyo, Braze) and is SOC 2 certified.
+  The product is delivered as a hosted application; there is no public developer API,
+  documentation, or SDK surface at this time.
 url: https://raw.githubusercontent.com/api-evangelist/hilberts-ai/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/69241c9125ae02b952e6e87e/69d687860ff71b79e5d2cf94_OG.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -11,12 +35,42 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
+- Artificial Intelligence
+- Growth
+- Analytics
+- Marketing
+- Data Science
+- Automation
+- Agentic AI
+- B2C
 apis: []
+common:
+- type: DomainSecurity
+  url: security/hilberts-ai-domain-security.yml
+- type: Website
+  url: https://hilberts.ai
+- type: Integrations
+  url: https://hilberts.ai/integrations
+- type: Login
+  url: https://app.hilberts.ai/
+- type: SignUp
+  url: https://hilberts.ai/book-a-demo
+- type: TermsOfService
+  url: https://hilberts.ai/terms-of-service
+- type: PrivacyPolicy
+  url: https://hilberts.ai/privacy-policy
+- type: Compliance
+  url: https://hilberts.ai
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
