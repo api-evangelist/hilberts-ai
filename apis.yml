@@ -11,9 +11,12 @@ description: >-
   product, and finance teams collapse months-long decision cycles into minutes
   without writing code or navigating dashboards. Hilbert connects to existing data
   and paid-media stacks via prebuilt integrations (Meta, Google, Pinterest, Snapchat,
-  Reddit, Google Analytics 4, Triple Whale, Klaviyo, Braze) and is SOC 2 certified.
-  The product is delivered as a hosted application; there is no public developer API,
-  documentation, or SDK surface at this time.
+  Reddit, Google Analytics 4, Triple Whale, Klaviyo, Braze) and states SOC 2 on its
+  own site. The product is delivered as a hosted application. There is no public
+  developer program, but the application backend does publish a reachable Swagger UI
+  and an OpenAPI 3.0.0 document at https://app-api.hilberts.ai/api-docs, which
+  declares the platform's security schemes and core data models while shipping an
+  empty paths object, so no operations are documented.
 url: https://raw.githubusercontent.com/api-evangelist/hilberts-ai/refs/heads/main/apis.yml
 accessModel:
   pricing: unknown
@@ -35,7 +38,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-13'
 tags:
 - Company
 - Artificial Intelligence
@@ -46,7 +49,55 @@ tags:
 - Automation
 - Agentic AI
 - B2C
-apis: []
+apis:
+- name: Hilbert's Program API
+  description: >-
+    The backend API of the Hilbert growth-infrastructure application. Its OpenAPI
+    3.0.0 document is published unauthenticated through a Swagger UI at
+    https://app-api.hilberts.ai/api-docs. The document declares two security schemes
+    (Auth0-issued bearer JWT and an x-api-key header for server-to-server calls) and
+    eight component schemas covering users, organizations, metric calculation, and
+    project goal tracking, but its paths object is empty, so no operations are
+    documented. The production base URL is https://app-api.hilberts.ai/api/v1,
+    observed as the configured API base and Auth0 audience in the application's own
+    public JavaScript bundle; the spec's own servers[] block still carries the
+    development placeholder http://localhost:3000/api/v1.
+  humanURL: https://app-api.hilberts.ai/api-docs
+  baseURL: https://app-api.hilberts.ai/api/v1
+  tags:
+  - growth-analytics
+  - customer-intelligence
+  - metrics
+  - cohort-analysis
+  - marketing-analytics
+  - b2c
+  properties:
+  - type: OpenAPI
+    url: openapi/hilberts-ai-program-api-openapi.yml
+  - type: APIReference
+    url: https://app-api.hilberts.ai/api-docs
+  - type: Documentation
+    url: https://app-api.hilberts.ai/api-docs
+  - type: Authentication
+    url: authentication/hilberts-ai-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hilberts-ai-scopes.yml
+  - type: Conventions
+    url: conventions/hilberts-ai-conventions.yml
+  - type: DataModel
+    url: data-model/hilberts-ai-data-model.yml
+  - type: ErrorCatalog
+    url: errors/hilberts-ai-problem-types.yml
+  - type: Overlay
+    url: overlays/hilberts-ai-program-api-overlay.yaml
+  - type: Lifecycle
+    url: lifecycle/hilberts-ai-lifecycle.yml
+  - type: Conformance
+    url: conformance/hilberts-ai-conformance.yml
+  - type: RateLimits
+    url: rate-limits/hilberts-ai-rate-limits.yml
+  - type: Plans
+    url: plans/hilberts-ai-plans-pricing.yml
 common:
 - type: DomainSecurity
   url: security/hilberts-ai-domain-security.yml
@@ -64,13 +115,32 @@ common:
   url: https://hilberts.ai/privacy-policy
 - type: Compliance
   url: https://hilberts.ai
+- type: WellKnown
+  url: well-known/hilberts-ai-well-known.yml
+- type: LLMsTxt
+  url: llms/hilberts-ai-llms.txt
+- type: Packages
+  url: packages/hilberts-ai-packages.yml
+- type: Blog
+  url: https://hilberts.ai/growth-hub
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 17
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Previously recorded as having no API surface. STEP 0b contract discovery found a real
+    OpenAPI 3.0.0 served unauthenticated through a Swagger UI at
+    https://app-api.hilberts.ai/api-docs, reached by reading the API base out of the
+    app.hilberts.ai JavaScript bundle after every /.well-known/ and spec path on the
+    marketing and app hosts missed. Ownership confirmed under STEP 0c: the spec
+    self-identifies as "Hilbert's Program" (hilbertsprogram.com), which is this company's
+    former identity and 301s to hilberts.ai. The document declares zero operations
+    (paths is an empty object). A 1200-request per 60-second rate limit was observed at
+    runtime from x-ratelimit-* headers though it is documented nowhere. No MCP server,
+    no agent card, no SDKs, no webhooks and no published pricing.
