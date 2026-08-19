@@ -1,0 +1,88 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/hilberts-ai-program-api-openapi.yml + https://hilbert-app.us.auth0.com/.well-known/openid-configuration + the app.hilberts.ai JavaScript bundle
+note: >-
+  Hilbert publishes no developer documentation, so nothing here comes from a written
+  convention. Every entry below is derived from the OpenAPI document, the live Auth0
+  discovery document, or the public application bundle, and every unknown is recorded as
+  unknown rather than assumed. In particular there is NO evidence of idempotency,
+  pagination, request-id tracing, expansion or rate-limit signaling anywhere in Hilbert's
+  public surface, so no Idempotency pointer is emitted for this provider.
+authentication:
+  styles:
+  - kind: bearer
+    header: Authorization
+    format: JWT
+    issuer: https://hilbert-app.us.auth0.com/
+    audience: https://app-api.hilberts.ai
+    note: Used by the first-party application (Auth0 SPA SDK, authorization code + PKCE).
+  - kind: api-key
+    header: x-api-key
+    note: Declared in the spec for server-to-server authentication. No issuance path is documented.
+  detail: authentication/hilberts-ai-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  spec_info_version: 1.0.0
+  media_type_versioning: false
+  header_versioning: false
+  detail: lifecycle/hilberts-ai-lifecycle.yml
+idempotency:
+  supported: unknown
+  evidence: none
+  note: >-
+    No Idempotency-Key header, no idempotency parameter, and no idempotency prose exists
+    in the spec or on any Hilbert host. Recorded as unknown, not as absent, because the
+    spec declares zero operations and therefore cannot show one either way.
+pagination:
+  style: unknown
+  evidence: none
+  note: The spec declares no operations and no pagination-shaped schemas or parameters.
+filtering:
+  style: request-body
+  note: >-
+    The one request shape Hilbert publishes filters by a body-level audience[] array of
+    {id, filterType, filterConfig, isEnabled} objects across 21 enumerated filterType
+    values, plus a metric enum and an explicit startDay/endDay/customerSegmentDay date
+    window. Filtering is modelled in the body, not in query parameters.
+  source: openapi/hilberts-ai-program-api-openapi.yml#/components/schemas/MetricCalculationRequest
+field_expansion:
+  supported: unknown
+  evidence: none
+sparse_fieldsets:
+  supported: unknown
+  evidence: none
+metadata:
+  supported: unknown
+  evidence: none
+request_tracing:
+  request_id_header: unknown
+  evidence: none
+response_envelope:
+  style: status-wrapped
+  success:
+    status: success
+  error:
+    status: error
+  note: >-
+    Both the success and error shapes Hilbert publishes wrap the payload in a top-level
+    status string discriminator rather than relying on the HTTP status code alone.
+  source: openapi/hilberts-ai-program-api-openapi.yml#/components/schemas
+error_envelope:
+  format: custom
+  rfc9457: false
+  detail: errors/hilberts-ai-problem-types.yml
+rate_limit_signaling:
+  headers: unknown
+  evidence: none
+  detail: rate-limits/hilberts-ai-rate-limits.yml
+date_format:
+  style: ISO 8601 date
+  pattern: YYYY-MM-DD
+  example: '2024-01-31'
+  source: openapi/hilberts-ai-program-api-openapi.yml#/components/schemas/MetricCalculationRequest
+  note: The spec's own VALIDATION_ERROR example enforces this format.
+identifiers:
+  detail: data-model/hilberts-ai-data-model.yml
+  organization_prefix: org_

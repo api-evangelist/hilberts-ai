@@ -1,0 +1,269 @@
+openapi: 3.0.0
+info:
+  title: Hilbert's Program API
+  version: 1.0.0
+  description: API documentation for Hilbert's Program growth consultancy platform
+  contact:
+    name: Hilbert's Program
+    url: https://hilbertsprogram.com
+    email: info@hilbertsprogram.com
+  license:
+    name: ISC
+    url: https://opensource.org/licenses/ISC
+servers:
+- url: https://app-api.hilberts.ai/api/v1
+  description: Production server (observed as the configured API base and Auth0 audience
+    in the app.hilberts.ai JavaScript bundle; not published in the provider spec,
+    added by API Evangelist)
+- url: http://localhost:3000/api/v1
+  description: Development server (as published by the provider)
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: API key for server to server authentication
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        message:
+          type: string
+          example: Error message
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 60d21b4667d0d8992e610c85
+        email:
+          type: string
+          example: user@example.com
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        role:
+          type: string
+          enum:
+          - admin
+          - manager
+          - user
+          - viewer
+          example: user
+        isActive:
+          type: boolean
+          example: true
+        isEmailVerified:
+          type: boolean
+          example: true
+        organizationId:
+          type: string
+          example: org_hOCwpX5BDOvmlLYG
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+          example: org_hOCwpX5BDOvmlLYG
+        name:
+          type: string
+          example: Acme Inc.
+        displayName:
+          type: string
+          example: Acme Corporation
+        description:
+          type: string
+          example: A company that makes everything
+        industry:
+          type: string
+          example: Technology
+        website:
+          type: string
+          example: https://acme.com
+        auth0Id:
+          type: string
+          example: org_abc123def456
+        isActive:
+          type: boolean
+          example: true
+    MetricCalculationRequest:
+      type: object
+      required:
+      - organizationId
+      - audience
+      - metric
+      - startDay
+      - endDay
+      - customerSegmentDay
+      properties:
+        organizationId:
+          type: string
+          description: Organization ID (required for admin:project authorization)
+          example: org_hOCwpX5BDOvmlLYG
+        audience:
+          type: array
+          description: Array of audience filters to apply
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: filter-1
+              filterType:
+                type: string
+                enum:
+                - signup_cohort
+                - location
+                - language
+                - marketing_consent
+                - referral_source
+                - rfm
+                - total_order_count_category
+                - bad_experience_category
+                - customer_segment
+                - device_type
+                - os_type
+                - avg_promo_ratio
+                - avg_discount_ratio
+                - main_service_area
+                - hilbert_decay
+                - hilbert_decay_breakdown
+                - hilbert_value
+                - hilbert_value_breakdown
+                - product_propensity
+                - category_propensity
+                - marketing_channel
+                example: location
+              filterConfig:
+                type: object
+                example:
+                  location:
+                    country: US
+              isEnabled:
+                type: boolean
+                example: true
+        metric:
+          type: string
+          enum:
+          - Revenue
+          - Order Count
+          - Active User Count
+          - Acquisition
+          - Churn
+          - Reactivation
+          - Order Count Per User
+          - Revenue Per Order
+          - Average Basket Value
+          - Fee Per Order
+          - Discount Per Order
+          description: The metric to calculate
+          example: Revenue
+        startDay:
+          type: string
+          format: date
+          description: Start date for the calculation period (YYYY-MM-DD)
+          example: '2025-01-01'
+        endDay:
+          type: string
+          format: date
+          description: End date for the calculation period (YYYY-MM-DD)
+          example: '2025-07-31'
+        customerSegmentDay:
+          type: string
+          format: date
+          description: Customer segment date (YYYY-MM-DD)
+          example: '2025-07-31'
+        topPercentile:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: 'Optional: Calculate metric for top X% of customers (0-100)'
+          example: 20
+    MetricCalculationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        data:
+          type: object
+          properties:
+            metric:
+              type: string
+              example: Revenue
+            value:
+              type: number
+              example: 100000.5
+            audience:
+              type: object
+              properties:
+                totalCustomers:
+                  type: number
+                  example: 10000
+                filteredCustomers:
+                  type: number
+                  example: 5000
+                topPercentileCustomers:
+                  type: number
+                  example: 500
+                  description: Only present if topPercentile was requested
+            timeRange:
+              type: object
+              properties:
+                startDay:
+                  type: string
+                  format: date
+                  example: '2024-01-01'
+                endDay:
+                  type: string
+                  format: date
+                  example: '2024-01-31'
+    MetricCalculationErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: VALIDATION_ERROR
+            message:
+              type: string
+              example: Invalid request parameters
+            details:
+              type: object
+              properties:
+                field:
+                  type: string
+                  example: startDay
+                suggestion:
+                  type: string
+                  example: Date format must be YYYY-MM-DD
+    UpdateProjectGoalTrackingsOfOrganizationRequest:
+      type: object
+      properties:
+        organizationId:
+          type: string
+          example: org_hOCwpX5BDOvmlLYG
+    UpdateProjectGoalTrackingsOfOrganizationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+paths: {}
+tags: []

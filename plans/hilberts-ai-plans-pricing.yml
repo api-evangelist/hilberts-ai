@@ -1,0 +1,30 @@
+generated: '2026-08-13'
+method: searched
+source: https://hilberts.ai/sitemap.xml
+plan_count: 0
+plans: []
+note: >-
+  Hilbert publishes no pricing at all. https://hilberts.ai/pricing returns HTTP 404 and
+  the site's own sitemap.xml lists 38 URLs with no pricing, plans or packages page among
+  them. Every commercial call to action on the site routes to
+  https://hilberts.ai/book-a-demo. There is a separate startup-program page, but it
+  states no price, tier or quota. This is an enterprise contact-sales motion with no
+  published tiers, not a gap in our search.
+signup:
+  model: contact-sales
+  url: https://hilberts.ai/book-a-demo
+  self_serve: false
+programs:
+- name: Startup Program
+  url: https://hilberts.ai/startup-program
+  price: null
+  note: Published as a program page with no stated pricing, discount or eligibility quota.
+evidence:
+- url: https://hilberts.ai/pricing
+  status: 404
+- url: https://hilberts.ai/sitemap.xml
+  status: 200
+- url: https://hilberts.ai/book-a-demo
+  status: 200
+- url: https://hilberts.ai/startup-program
+  status: 200

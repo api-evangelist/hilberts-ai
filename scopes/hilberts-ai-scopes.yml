@@ -1,0 +1,76 @@
+generated: '2026-08-13'
+method: probed
+source: https://hilbert-app.us.auth0.com/.well-known/openid-configuration
+docs: null
+note: >-
+  The published OpenAPI declares no oauth2 securityScheme, so derive-oauth-scopes.py
+  found nothing to derive (0 oauth2 schemes, 0 scopes). Hilbert nevertheless runs OAuth
+  2.0 / OIDC: the application authenticates against the Auth0 tenant
+  hilbert-app.us.auth0.com with audience https://app-api.hilberts.ai. The scopes below
+  are the tenant's own advertised scopes_supported, read verbatim from its discovery
+  document. These are OIDC identity scopes, not Hilbert API permission scopes. The one
+  API-permission string Hilbert does name anywhere public is admin:project, described in
+  the MetricCalculationRequest schema of the OpenAPI; it is recorded separately below
+  because it is a documented authorization requirement, not a scope the discovery
+  document advertises. No public scopes/permissions reference page exists.
+schemes:
+- name: auth0-oidc
+  type: oauth2
+  source: https://hilbert-app.us.auth0.com/.well-known/openid-configuration
+  issuer: https://hilbert-app.us.auth0.com/
+  audience: https://app-api.hilberts.ai
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://hilbert-app.us.auth0.com/authorize
+    tokenUrl: https://hilbert-app.us.auth0.com/oauth/token
+    pkce: true
+    code_challenge_methods: [S256, plain]
+  - flow: clientCredentials
+    tokenUrl: https://hilbert-app.us.auth0.com/oauth/token
+  - flow: deviceCode
+    deviceAuthorizationUrl: https://hilbert-app.us.auth0.com/oauth/device/code
+    tokenUrl: https://hilbert-app.us.auth0.com/oauth/token
+scopes:
+- scope: openid
+  kind: oidc
+  description: Request an ID token
+- scope: profile
+  kind: oidc
+  description: Basic profile claims
+- scope: offline_access
+  kind: oidc
+  description: Issue a refresh token
+- scope: email
+  kind: oidc
+- scope: email_verified
+  kind: oidc
+- scope: name
+  kind: oidc
+- scope: given_name
+  kind: oidc
+- scope: family_name
+  kind: oidc
+- scope: nickname
+  kind: oidc
+- scope: picture
+  kind: oidc
+- scope: phone
+  kind: oidc
+- scope: address
+  kind: oidc
+- scope: created_at
+  kind: oidc
+- scope: identities
+  kind: oidc
+api_permissions:
+- name: admin:project
+  source: openapi/hilberts-ai-program-api-openapi.yml#/components/schemas/MetricCalculationRequest
+  description: >-
+    Named in the spec as the authorization under which organizationId must be supplied
+    on a metric calculation request. Hilbert publishes no permissions reference, so the
+    full permission set is unknown.
+x-evidence:
+  fetched: '2026-08-13'
+  url: https://hilbert-app.us.auth0.com/.well-known/openid-configuration
+  http_status: 200
+  content_type: application/json

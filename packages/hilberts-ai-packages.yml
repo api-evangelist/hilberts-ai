@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: searched
+source: npm, PyPI, RubyGems, crates.io registry lookups + https://hilberts.ai/sitemap.xml
+package_count: 0
+official_count: 0
+packages: []
+note: >-
+  Hilbert publishes no client libraries. The npm registry search API returns zero results
+  for "hilberts"; registry.npmjs.org/hilberts and the @hilberts scope both 404; PyPI 404s
+  for hilberts and hilbert-ai; RubyGems 404s. The only GitHub organization that resolves,
+  github.com/hilbertsprogram (created 2025-03-11, matching the company's former identity),
+  has zero public repositories and carries no name, website or email that would let us
+  confirm ownership, so it is not wired as a GitHubOrganization pointer. There is no SDK
+  page, no downloads page and no developer portal on hilberts.ai. No SDKs pointer is
+  emitted because there are no SDKs.
+  Note: the PyPI project "hilbert" exists but is an unrelated third-party mathematics
+  package, not a Hilbert's AI client library, and is deliberately not recorded here.
+registries_checked:
+- registry: npm
+  query: hilberts
+  endpoint: https://registry.npmjs.org/-/v1/search?text=hilberts
+  status: 200
+  results: 0
+- registry: npm
+  package: hilberts
+  endpoint: https://registry.npmjs.org/hilberts
+  status: 404
+- registry: npm
+  package: '@hilberts/sdk'
+  endpoint: https://registry.npmjs.org/@hilberts%2Fsdk
+  status: 404
+- registry: pypi
+  package: hilberts
+  endpoint: https://pypi.org/pypi/hilberts/json
+  status: 404
+- registry: pypi
+  package: hilbert-ai
+  endpoint: https://pypi.org/pypi/hilbert-ai/json
+  status: 404
+- registry: rubygems
+  package: hilberts
+  endpoint: https://rubygems.org/api/v1/gems/hilberts.json
+  status: 404
+- registry: crates.io
+  package: hilberts
+  endpoint: https://crates.io/api/v1/crates/hilberts
+  status: 403
+  note: crates.io rejected the unauthenticated user agent; treated as inconclusive rather than as an absence.
+- registry: github
+  org: hilbertsprogram
+  endpoint: https://api.github.com/orgs/hilbertsprogram
+  status: 200
+  public_repos: 0
+  note: Empty org, ownership unconfirmed. Not wired.
+- registry: github
+  org: hilberts-ai
+  status: 404
+- registry: github
+  org: hilbert-ai
+  status: 404

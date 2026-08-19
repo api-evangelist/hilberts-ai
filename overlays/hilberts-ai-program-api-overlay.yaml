@@ -1,0 +1,62 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Hilbert's Program API
+  version: 1.0.0
+extends: openapi/hilberts-ai-program-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Enhancements derived from the provider's published spec at
+  https://app-api.hilberts.ai/api-docs, the live Auth0 discovery document at
+  https://hilbert-app.us.auth0.com/.well-known/openid-configuration, and the public
+  application bundle at https://app.hilberts.ai. The original document is preserved
+  verbatim at openapi/_original/hilberts-ai-program-api-openapi.json and is never mutated.
+actions:
+- target: $.info
+  description: Record who the spec actually belongs to and the ownership evidence chain.
+  update:
+    x-apievangelist-provider: hilberts-ai
+    x-apievangelist-ownership: >-
+      The spec's info block self-identifies as "Hilbert's Program" with contact
+      hilbertsprogram.com. That is this company's former identity: hilbertsprogram.com
+      returns HTTP 200 after redirecting to hilberts.ai. The spec is served from
+      app-api.hilberts.ai, which the app.hilberts.ai bundle names as its API base and as
+      its Auth0 audience.
+    x-apievangelist-empty-paths: >-
+      The published document declares zero operations. components.schemas and
+      components.securitySchemes are populated, but paths is an empty object, so nothing
+      in this contract is callable as published.
+- target: $.servers
+  description: >-
+    Replace the localhost development placeholder with the observed production base URL,
+    keeping the provider's own entry so the published value is not lost.
+  update:
+  - url: https://app-api.hilberts.ai/api/v1
+    description: >-
+      Production server. Observed as the configured API base and Auth0 audience in the
+      public app.hilberts.ai JavaScript bundle. Not published by the provider.
+    x-apievangelist-added: true
+  - url: http://localhost:3000/api/v1
+    description: Development server (as published by the provider)
+- target: $.components.securitySchemes.bearerAuth
+  description: Bind the bearer scheme to the identity provider that actually issues the token.
+  update:
+    x-apievangelist-issuer: https://hilbert-app.us.auth0.com/
+    x-apievangelist-audience: https://app-api.hilberts.ai
+    x-apievangelist-openid-configuration: https://hilbert-app.us.auth0.com/.well-known/openid-configuration
+    x-apievangelist-jwks-uri: https://hilbert-app.us.auth0.com/.well-known/jwks.json
+- target: $.components.securitySchemes.apiKey
+  description: Record that no issuance path is documented for the server-to-server key.
+  update:
+    x-apievangelist-issuance: >-
+      Undocumented. Hilbert publishes no developer portal, no key-management page and no
+      self-serve signup; access is arranged through https://hilberts.ai/book-a-demo.
+- target: $.components.schemas.MetricCalculationRequest
+  description: Surface the authorization requirement named in the schema description.
+  update:
+    x-apievangelist-required-permission: admin:project
+- target: $.components.schemas.MetricCalculationErrorResponse
+  description: Record the error format position for agent consumers.
+  update:
+    x-apievangelist-error-format: custom
+    x-apievangelist-rfc9457: false

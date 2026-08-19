@@ -1,0 +1,60 @@
+generated: '2026-08-13'
+method: probed
+source: https://app-api.hilberts.ai/api/v1/
+limit_count: 1
+note: >-
+  Hilbert DOCUMENTS no rate limits anywhere — there is no developer portal, no docs site,
+  and the OpenAPI at https://app-api.hilberts.ai/api-docs declares zero operations and so
+  carries no 429 response. The limit below was not read from documentation; it was
+  OBSERVED on live unauthenticated responses from the API host, which emit legacy
+  X-RateLimit-* headers on every request including 404s. The window was established by
+  sampling x-ratelimit-reset against wall clock across repeated calls: the reset value
+  sits a consistent 61-62 seconds ahead, so the window is a rolling 60 seconds. The
+  status code returned on exhaustion is unknown because the limit was not exhausted; we
+  do not exhaust a provider's limit to measure it.
+limits:
+- scope: per-ip
+  window: 60s
+  limit: 1200
+  burst: null
+  applies_to: all requests to https://app-api.hilberts.ai/api/v1/, observed on unauthenticated 404 responses
+  method: probed
+  note: >-
+    Scope is inferred as per-IP because the observation was made unauthenticated, with no
+    key and no token presented, and a counter was still returned and decremented. Whether
+    an authenticated caller gets a different or additional per-key/per-organization limit
+    is not observable without credentials.
+headers:
+- name: x-ratelimit-limit
+  example: '1200'
+  standard: legacy X-RateLimit-* (not RFC 9331 RateLimit-*)
+- name: x-ratelimit-remaining
+  example: '1199'
+  standard: legacy X-RateLimit-* (not RFC 9331 RateLimit-*)
+- name: x-ratelimit-reset
+  example: '1786644638'
+  format: unix-epoch-seconds
+  standard: legacy X-RateLimit-* (not RFC 9331 RateLimit-*)
+- name: retry-after
+  present: false
+  note: Not returned on any observed response.
+exhaustion_status: unknown
+rfc9331_ratelimit_headers: false
+evidence:
+- url: https://app-api.hilberts.ai/api/v1/
+  status: 404
+  observed_headers:
+    x-ratelimit-limit: '1200'
+    x-ratelimit-remaining: '1199'
+    x-ratelimit-reset: '1786644638'
+  note: 'Body {"status":"fail","message":"Not Found - /api/v1/"}. Sampled repeatedly; reset consistently 61-62s ahead of wall clock.'
+- url: https://app-api.hilberts.ai/api-docs
+  status: 200
+  note: Swagger UI shell; embedded spec has an empty paths object, so no 429 response is declared.
+- url: https://hilberts.ai/sitemap.xml
+  status: 200
+  note: 38 URLs, no documentation or developer pages, so no published limits to reconcile against.
+gaps:
+- The limit is emitted at runtime but documented nowhere, so an integrator can only discover it by calling.
+- Headers are the legacy X-RateLimit-* form, not the RFC 9331 RateLimit-* standard.
+- No Retry-After is returned, so a client has to compute backoff from the epoch reset itself.

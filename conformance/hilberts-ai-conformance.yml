@@ -1,0 +1,73 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/hilberts-ai-program-api-openapi.yml + https://hilbert-app.us.auth0.com/.well-known/openid-configuration + https://hilberts.ai
+note: >-
+  Derived from the provider's own OpenAPI, the live discovery document of the Auth0
+  tenant the application authenticates against, and the compliance claim on the Hilbert
+  homepage. Hilbert publishes no trust center, no security page and no certification
+  detail; the SOC 2 entry below records a marketing claim, not a verified report.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    Provider serves a valid OpenAPI 3.0.0 document unauthenticated at
+    https://app-api.hilberts.ai/api-docs. Note the document declares zero operations.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Auth0 tenant hilbert-app.us.auth0.com advertises authorization_code, client_credentials,
+    refresh_token and device_code grants at its RFC 8414 metadata endpoint.
+- id: oidc
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration returns HTTP 200 with issuer, jwks_uri, userinfo,
+    end_session and registration endpoints.
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns HTTP 200 on the Auth0 tenant.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported includes S256.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json media type appears in the spec; errors use a bespoke
+    status/error envelope. See errors/hilberts-ai-problem-types.yml.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns HTTP 404 on hilberts.ai and app-api.hilberts.ai.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No deprecation or sunset policy is published on any Hilbert host.
+- id: rfc8615-well-known-agent-card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return HTTP 404 on
+    hilberts.ai and app-api.hilberts.ai; the app.hilberts.ai 200s are SPA HTML shells.
+- id: asyncapi
+  conforms: false
+  evidence: No event, streaming or webhook surface is published. Not applicable rather than failed.
+- id: json-api
+  conforms: false
+  evidence: Response envelope is a bespoke status-wrapped shape, not JSON:API.
+compliance_programs:
+- name: SOC 2
+  status: claimed
+  source: https://hilberts.ai
+  evidence: >-
+    The homepage "Integration & Security" section states SOC 2 alongside claims that all
+    connections are encrypted and that the platform is never reliant on personal data.
+    No report, no auditor, no type (I or II), no date and no trust center are published.
+  verified: false
+- name: GDPR
+  status: not-claimed
+  source: null
+- name: ISO 27001
+  status: not-claimed
+  source: null
+- name: HIPAA
+  status: not-claimed
+  source: null
+- name: PCI DSS
+  status: not-claimed
+  source: null

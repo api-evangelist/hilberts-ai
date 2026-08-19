@@ -1,0 +1,61 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/hilberts-ai-program-api-openapi.yml
+format: custom
+rfc9457: false
+note: >-
+  Derived from the two error schemas in the provider's OpenAPI. The spec's paths object
+  is empty, so there are no 4xx/5xx responses to enumerate and no operation can be cited
+  as a source. Hilbert publishes no error reference, no status-code table and no error
+  registry, so the codes below are limited to the single value carried as an example in
+  the spec. Errors are NOT RFC 9457: no application/problem+json media type appears
+  anywhere in the spec, and the envelope is a bespoke status/error shape.
+envelopes:
+- name: Error
+  shape:
+    status: string
+    message: string
+  example:
+    status: error
+    message: Error message
+  source: openapi/hilberts-ai-program-api-openapi.yml#/components/schemas/Error
+- name: MetricCalculationErrorResponse
+  shape:
+    status: string
+    error:
+      code: string
+      message: string
+      details:
+        field: string
+        suggestion: string
+  example:
+    status: error
+    error:
+      code: VALIDATION_ERROR
+      message: Invalid request parameters
+      details:
+        field: startDay
+        suggestion: Date format must be YYYY-MM-DD
+  source: openapi/hilberts-ai-program-api-openapi.yml#/components/schemas/MetricCalculationErrorResponse
+  note: >-
+    This is the richer of the two envelopes and the only one carrying a machine-readable
+    code plus a field-level remediation hint. It is scoped to metric calculation.
+problems:
+- code: VALIDATION_ERROR
+  title: Invalid request parameters
+  status: null
+  envelope: MetricCalculationErrorResponse
+  remediation_field: error.details.suggestion
+  source: openapi/hilberts-ai-program-api-openapi.yml#/components/schemas/MetricCalculationErrorResponse
+  note: >-
+    The only error code Hilbert publishes anywhere. No HTTP status is bound to it in the
+    spec because the spec declares no operations.
+coverage:
+  codes_published: 1
+  envelopes: 2
+  operations_with_error_responses: 0
+gaps:
+- No HTTP status codes are mapped to any error.
+- No error reference page exists on any Hilbert host.
+- The generic Error envelope carries no machine-readable code field at all.
+- Errors are not RFC 9457 problem+json.

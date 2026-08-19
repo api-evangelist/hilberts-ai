@@ -1,0 +1,55 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/hilberts-ai-program-api-openapi.yml + live probes of hilberts.ai
+note: >-
+  Hilbert publishes no versioning policy, no deprecation policy, no SLA, no changelog and
+  no status page. The versioning entry below is derived from the observed base path and
+  the spec's info.version; everything else is a recorded absence. No StatusPage and no
+  Deprecation pointer is emitted, because neither surface exists.
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  spec_info_version: 1.0.0
+  policy_url: null
+  method: derived
+  evidence: >-
+    Base path observed in the app.hilberts.ai JavaScript bundle
+    (https://app-api.hilberts.ai/api/v1) and in the spec's own development server entry
+    (http://localhost:3000/api/v1).
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  evidence: No deprecation or sunset policy is published on any Hilbert host.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  probes:
+  - url: https://status.hilberts.ai/
+    status: 0
+    result: no DNS
+  - url: https://hilberts.ai/status
+    status: 404
+changelog:
+  url: null
+  probes:
+  - url: https://hilberts.ai/changelog
+    status: 404
+deprecated_operations: []
+license:
+  name: ISC
+  url: https://opensource.org/licenses/ISC
+  source: openapi/hilberts-ai-program-api-openapi.yml#/info/license
+  note: >-
+    Declared in the spec's info.license block. This is the default scaffold license of
+    an npm-initialised project rather than a stated API licensing position.
+support:
+  contact_email: info@hilbertsprogram.com
+  source: openapi/hilberts-ai-program-api-openapi.yml#/info/contact
+  note: >-
+    The spec's contact block still carries the company's former identity, Hilbert's
+    Program (hilbertsprogram.com, which now 301s to hilberts.ai). No support page,
+    help center or developer contact is published under the current brand.

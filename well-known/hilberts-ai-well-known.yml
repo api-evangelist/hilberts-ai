@@ -1,0 +1,102 @@
+generated: '2026-08-13'
+method: searched
+source: live probes of every host named in apis.yml, the OpenAPI servers[] block, and the Auth0 tenant the application authenticates against
+note: >-
+  Four hosts were probed. The marketing site (hilberts.ai, Webflow) and the API host
+  (app-api.hilberts.ai) 404 on every /.well-known/ path. The application host
+  (app.hilberts.ai) is a single-page-app catch-all that answers HTTP 200 with the same
+  React index.html shell for every path including every /.well-known/ path — those 200s
+  are NOT documents and are recorded as misses. The only real documents found are the
+  OIDC discovery and RFC 8414 authorization-server metadata served by the provider's own
+  Auth0 tenant, hilbert-app.us.auth0.com, which is the issuer the app.hilberts.ai bundle
+  is configured against (audience https://app-api.hilberts.ai). No security.txt is served
+  on any host, so no SecurityTxt pointer is emitted.
+hosts:
+- host: https://hilberts.ai
+  role: website
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app-api.hilberts.ai
+  role: api
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://app.hilberts.ai
+  role: application
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: miss
+    content_type: text/html
+    note: SPA catch-all returned the React index.html shell, not a document
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: miss
+    content_type: text/html
+    note: SPA catch-all returned the React index.html shell, not a document
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: miss
+    content_type: text/html
+    note: SPA catch-all returned the React index.html shell, not a document
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    result: miss
+    content_type: text/html
+    note: SPA catch-all returned the React index.html shell, not a document
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: miss
+    content_type: text/html
+    note: SPA catch-all returned the React index.html shell, not a document
+  - path: /.well-known/agent.json
+    status: 200
+    result: miss
+    content_type: text/html
+    note: SPA catch-all returned the React index.html shell, not a document
+- host: https://hilbert-app.us.auth0.com
+  role: identity-provider
+  note: >-
+    Provider-controlled Auth0 tenant. It is the issuer the Hilbert application is
+    configured against, so these documents describe Hilbert's own authorization server
+    rather than a generic third party.
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    result: hit
+    file: hilberts-ai-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    result: hit
+    file: hilberts-ai-oauth-authorization-server.json
+    note: byte-identical to the OIDC discovery document
+  - path: /.well-known/jwks.json
+    status: 200
+    content_type: application/json
+    result: hit
+    note: not saved; rotating signing keys, no lasting value as a catalog artifact

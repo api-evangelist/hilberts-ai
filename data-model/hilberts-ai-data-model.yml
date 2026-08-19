@@ -1,0 +1,98 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/hilberts-ai-program-api-openapi.yml
+note: >-
+  Derived from the eight component schemas in the provider's OpenAPI. Because the spec's
+  paths object is empty there are no operations and no $ref links between request and
+  response bodies; relationships below are derived from id-reference fields
+  (organizationId, auth0Id) only. Hilbert publishes no object reference, so field
+  semantics beyond what the spec's own examples show are unknown.
+id_formats:
+- entity: Organization
+  prefix: org_
+  example: org_hOCwpX5BDOvmlLYG
+  note: Matches the Auth0 organization id format; the schema also carries a separate auth0Id field with the same shape.
+- entity: User
+  prefix: null
+  example: 60d21b4667d0d8992e610c85
+  note: 24-character hexadecimal, the MongoDB ObjectId shape.
+entities:
+- name: User
+  fields: [id, email, firstName, lastName, role, isActive, isEmailVerified, organizationId]
+  enums:
+    role: [admin, manager, user, viewer]
+- name: Organization
+  fields: [id, name, displayName, description, industry, website, auth0Id, isActive]
+- name: MetricCalculationRequest
+  kind: request
+  required: [organizationId, audience, metric, startDay, endDay, customerSegmentDay]
+  enums:
+    metric:
+    - Revenue
+    - Order Count
+    - Active User Count
+    - Acquisition
+    - Churn
+    - Reactivation
+    - Order Count Per User
+    - Revenue Per Order
+    - Average Basket Value
+    - Fee Per Order
+    - Discount Per Order
+    audience[].filterType:
+    - signup_cohort
+    - location
+    - language
+    - marketing_consent
+    - referral_source
+    - rfm
+    - total_order_count_category
+    - bad_experience_category
+    - customer_segment
+    - device_type
+    - os_type
+    - avg_promo_ratio
+    - avg_discount_ratio
+    - main_service_area
+    - hilbert_decay
+    - hilbert_decay_breakdown
+    - hilbert_value
+    - hilbert_value_breakdown
+    - product_propensity
+    - category_propensity
+    - marketing_channel
+- name: MetricCalculationResponse
+  kind: response
+- name: MetricCalculationErrorResponse
+  kind: error
+- name: UpdateProjectGoalTrackingsOfOrganizationRequest
+  kind: request
+  fields: [organizationId]
+- name: UpdateProjectGoalTrackingsOfOrganizationResponse
+  kind: response
+- name: Error
+  kind: error
+relationships:
+- from: User
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: Organization
+  to: Auth0Organization
+  kind: has_one
+  via: auth0Id
+  note: External reference into the hilbert-app.us.auth0.com tenant, not a Hilbert API entity.
+- from: MetricCalculationRequest
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: UpdateProjectGoalTrackingsOfOrganizationRequest
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+coverage:
+  schemas: 8
+  entities: 2
+  request_response_pairs: 2
+  relationships: 4
+  operations: 0
