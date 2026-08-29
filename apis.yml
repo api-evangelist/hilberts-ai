@@ -18,6 +18,18 @@ description: >-
   declares the platform's security schemes and core data models while shipping an
   empty paths object, so no operations are documented.
 url: https://raw.githubusercontent.com/api-evangelist/hilberts-ai/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: unknown
