@@ -78,11 +78,11 @@ apis:
   baseURL: https://app-api.hilberts.ai/api/v1
   tags:
   - growth-analytics
-  - Customer Intelligence
+  - customer-intelligence
   - Metrics
   - cohort-analysis
-  - Marketing Analytics
-  - B2C
+  - marketing-analytics
+  - b2c
   tags_raw:
   - growth-analytics
   - customer-intelligence
