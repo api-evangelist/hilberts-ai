@@ -1,33 +1,31 @@
-# Kin Score artifact — hilberts-ai — 2026-08-21T110057
+# Kin Score artifact — hilberts-ai — 2026-09-20T232958
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: hilberts-ai
-  schema_version: 0.12.0
-  scored_at: '2026-08-21'
-  run_ts: 2026-08-21T110057
-  composite: 30.6
+  schema_version: 0.22.0
+  scored_at: '2026-09-20'
+  run_ts: 2026-09-20T232958
+  composite: 32.8
   band: thin
   facets:
-    discoverability: 87.0
-    contract_quality: 32.9
-    governance: 16.7
+    discoverability: 68.5
+    contract_quality: 32.0
+    contract_governance: 4.5
     operational_transparency: 21.1
-    developer_ergonomics: 2.4
-    commercial_clarity: 42.1
-    contract_governance: 16.7
+    developer_ergonomics: 31.0
     access_clarity: 42.1
   agent_readiness:
-    score: 18.4
-    band: agent-aware
+    score: 33.5
+    band: agent-ready
     dimensions:
       spec_presence: true
       agentic_access: false
       reversibility_documented: false
       mcp_server: false
-      auth_clarity: false
+      auth_clarity: served
       idempotency: false
-      error_semantics: false
+      error_semantics: documented
       openapi_examples: false
       rate_limit_signal: documented
       event_surface_described: false
@@ -36,6 +34,10 @@ kin_score:
       consent_identity: false
       agent_card: false
       dry_run_mode: false
+      delegated_identity: served
+      protected_resource_metadata: false
+      dynamic_client_registration: true
+      agentic_commerce: false
   provenance:
     conformance: derived
     contracts:
