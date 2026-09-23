@@ -1,0 +1,19 @@
+{
+  "provider": "hilberts-ai",
+  "sources": [
+    "_original/hilberts-ai-program-api-openapi.json"
+  ],
+  "outputs": [],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "produced no outputs (1 source(s) have no operations) \u2014 sources left in place rather than archived"
+  ],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "hilberts-ai-program-api-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0"
+  ],
+  "skipped": [
+    "hilberts-ai-program-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
