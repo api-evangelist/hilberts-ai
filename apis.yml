@@ -59,6 +59,16 @@ tags:
 - Marketing
 - Data Science
 - Automation
+- AI Agents
+- Consumer
+tags_raw:
+- Company
+- Artificial Intelligence
+- Growth
+- Analytics
+- Marketing
+- Data Science
+- Automation
 - Agentic AI
 - B2C
 apis:
@@ -82,7 +92,7 @@ apis:
   - Metrics
   - cohort-analysis
   - Marketing Analytics
-  - B2C
+  - Consumer
   tags_raw:
   - growth-analytics
   - customer-intelligence
@@ -90,6 +100,7 @@ apis:
   - cohort-analysis
   - marketing-analytics
   - b2c
+  - B2C
   properties:
   - type: OpenAPI
     url: openapi/hilberts-ai-program-api-openapi.yml
