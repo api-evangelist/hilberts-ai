@@ -129,6 +129,10 @@ apis:
   - type: Plans
     url: plans/hilberts-ai-plans-pricing.yml
 common:
+- type: Plans
+  url: plans/hilberts-ai-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/hilberts-ai-rate-limits.yml
 - type: DomainSecurity
   url: security/hilberts-ai-domain-security.yml
 - type: Website
